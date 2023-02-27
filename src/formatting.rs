@@ -76,6 +76,7 @@ pub fn format(to_print: Value, tab_width: usize, spaces: bool) -> String {
 
 			',' => {
 				if !in_quote {
+					to_return.push(c);
 					to_return.push('\n');
 					indent(&mut to_return, tab_width, indent_level, spaces);
 				}
