@@ -139,9 +139,9 @@ impl Value {
 			Value::Number(x) => to_return += &x.to_string(),
 
 			Value::Text(x) => {
-				to_return += "\"";
-				to_return += x;
-				to_return += "\"";
+				to_return.push('\"');
+				to_return.push_str(x);
+				to_return.push('\"');
 			},
 
 			Value::Bool(x) => if *x {to_return += "true"} else {to_return += "false"},
@@ -150,13 +150,13 @@ impl Value {
 				to_return += "{";
 
 				for value in x {
-					to_return += "\"";
-					to_return += value.0;
-					to_return += "\"";
+					to_return.push('\"');
+					to_return.push_str(value.0);
+					to_return.push('\"');
 
-					to_return += ":";
-					to_return += &Value::to_string(value.1);
-					to_return += ","
+					to_return.push(':');
+					to_return.push_str(&Value::to_string(value.1));
+					to_return.push(',');
 				}
 
 				//pop the last comma off the end
@@ -170,8 +170,8 @@ impl Value {
 			Value::Array(x) => {
 				to_return += "[";
 				for value in x {
-					to_return += &Value::to_string(value);
-					to_return += ",";
+					to_return.push_str(&Value::to_string(value));
+					to_return.push(',');
 				}
 
 				if x.len() > 0 {
