@@ -90,8 +90,6 @@ fn parse_keypair(keypair: &str) -> (&str, Value) {
 }
 
 fn get_splits(input: &str) -> Option<Vec<usize>> {
-	println!("Getting splits for: {}\n", input);
-
 	//get split indexes for current object
 	let mut in_quote = false;
 	let mut obj_level = 0;
