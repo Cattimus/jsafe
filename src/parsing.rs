@@ -1,4 +1,4 @@
-#[path = "json.rs"] mod json;
+use crate::json;
 use json::Value;
 
 fn remove_whitespace(input: &str) -> String {

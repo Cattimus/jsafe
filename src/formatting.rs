@@ -1,4 +1,5 @@
-#[path = "json.rs"] mod json;
+use crate::json;
+use json::Value;
 
 fn indent(input: &mut String, tab_width: usize, indent_level: usize, spaces: bool) {
 	for _ in 0..indent_level {
@@ -13,7 +14,7 @@ fn indent(input: &mut String, tab_width: usize, indent_level: usize, spaces: boo
 }
 
 //assumes spaces have been removed
-pub fn format(to_print: json::Value, tab_width: usize, spaces: bool) -> String {
+pub fn format(to_print: Value, tab_width: usize, spaces: bool) -> String {
 	let mut to_return = String::from("");
 
 	//convert value to string
