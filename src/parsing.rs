@@ -35,7 +35,7 @@ fn remove_whitespace(input: &str) -> String {
 	return to_return;
 }
 
-fn parse_value(value: &str) -> Value {
+pub fn parse_value(value: &str) -> Value {
 	let first = value.chars().nth(0).unwrap();
 	match first {
 		'"' => {
