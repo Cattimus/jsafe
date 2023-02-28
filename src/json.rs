@@ -110,8 +110,8 @@ impl Value {
 		return Value::Object(HashMap::new());
 	}
 	//Create new object from string
-	pub fn from_str(_input: &str) -> Value {
-		return Value::Null;
+	pub fn from_str(input: &str) -> Value {
+		return parsing::parse_object(input);
 	}
 
 	//Create new empty array
@@ -141,6 +141,13 @@ impl Value {
 		match self {
 			Value::Array(x) => x.push(val),
 			_ => println!("WARNING: attempted to append to a value that is not an array. Nothing will be done.")
+		}
+	}
+
+	pub fn add(&mut self, key: &str, val: Value) {
+		match self {
+			Value::Object(x) => {x.insert(key.to_string(), val);}
+			_ => println!("WARNING: attempted to append add a value that is not an object. Nothing will be done.")
 		}
 	}
 
