@@ -1,7 +1,7 @@
-use crate::json;
-use json::Value;
+use crate::json::Value;
 
 //Remove whitespace from a string (except for in quotes)
+#[allow(unused)]
 fn remove_whitespace(input: &str) -> String {
 	let mut to_return = String::from("");
 
@@ -43,6 +43,7 @@ fn remove_whitespace(input: &str) -> String {
 }
 
 //Convert a string to a json::Value object
+#[allow(unused)]
 pub fn parse_value(value: &str) -> Value {
 
 	//Check what the first character of the string is to see what the value should be
@@ -95,6 +96,7 @@ pub fn parse_value(value: &str) -> Value {
 }
 
 //Parse a keypair into a (key, value) tuple
+#[allow(unused)]
 fn parse_keypair(keypair: &str) -> (&str, Value) {
 
 	//split keypair value
@@ -110,6 +112,7 @@ fn parse_keypair(keypair: &str) -> (&str, Value) {
 }
 
 //Get a list of where we should split a string
+#[allow(unused)]
 fn get_splits(input: &str) -> Option<Vec<usize>> {
 
 	//The list of indexes we should split on
@@ -190,6 +193,7 @@ fn get_splits(input: &str) -> Option<Vec<usize>> {
 }
 
 //Parse a JSON object from a string
+#[allow(unused)]
 pub fn parse_object(input: &str) -> Value {
 	let mut to_return = Value::obj();
 
@@ -246,6 +250,7 @@ pub fn parse_object(input: &str) -> Value {
 
 
 //Parse a string into an array
+#[allow(unused)]
 pub fn parse_array(input: &str) -> Value{
 	let mut to_return = Value::arr();
 	

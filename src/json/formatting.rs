@@ -1,7 +1,8 @@
-use crate::json;
-use json::Value;
+use crate::json::Value;
+#[allow(unused)]
 
 //Helper function to make indenting easier
+#[allow(unused)]
 fn indent(input: &mut String, indent_level: usize, spaces: bool) {
 	for _ in 0..indent_level {
 		if spaces {
@@ -13,6 +14,7 @@ fn indent(input: &mut String, indent_level: usize, spaces: bool) {
 }
 
 //Format a json object from condensed text to human-readable format.
+#[allow(unused)]
 pub fn format(to_print: Value, spaces: usize) -> String {
 	let mut to_return = String::from("");
 

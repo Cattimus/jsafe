@@ -1,6 +1,6 @@
 mod json;
-mod parsing;
-mod formatting;
+use json::formatting;
+
 
 fn main() {
 	let mut temp = json::Value::obj();
