@@ -271,14 +271,8 @@ impl Index<&str> for Value {
 //Mutable index function for object obj["x"] = z;
 impl IndexMut<&str> for Value {
 	fn index_mut(&mut self, index: &str) -> &mut Self::Output {
-		if let Value::Object(x) = self {
-			if x.contains_key(index) {
-				return x.get_mut(index).unwrap();
-			}
-
-			//We need to return a mutable reference still
-			x.insert(index.to_string(), Value::obj());
-			return x.get_mut(index).unwrap();
+		if let Value::Object(x) = self { 
+			return x.entry(index.to_string()).or_insert(Value::obj());
 		}
 
 		//value is not an object (we still have to return a valid mutable reference)
