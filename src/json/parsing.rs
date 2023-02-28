@@ -296,7 +296,7 @@ pub fn parse_array(input: &str) -> Value{
 			return Value::Invalid;
 		}
 
-		to_return.append(val);
+		to_return.add(val);
 	}
 
 	return to_return;

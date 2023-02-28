@@ -137,17 +137,18 @@ impl Value {
 	}
 
 	//Append a new value to an array
-	pub fn append(&mut self, val: Value) {
+	pub fn add(&mut self, val: Value) {
 		match self {
 			Value::Array(x) => x.push(val),
 			_ => println!("WARNING: attempted to append to a value that is not an array. Nothing will be done.")
 		}
 	}
 
-	pub fn add(&mut self, key: &str, val: Value) {
+	pub fn alloc(&mut self, amount: usize) {
 		match self {
-			Value::Object(x) => {x.insert(key.to_string(), val);}
-			_ => println!("WARNING: attempted to append add a value that is not an object. Nothing will be done.")
+			Value::Object(x) => x.reserve(amount),
+			Value::Array(x) => x.reserve(amount),
+			_ => ()
 		}
 	}
 
