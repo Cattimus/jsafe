@@ -12,6 +12,7 @@ pub enum Value {
 	Array(Vec<Value>)
 }
 
+//Easy convert for number
 impl From<f64> for Value {
 	fn from(input: f64) -> Self {
 		return Value::Number(input);
@@ -45,6 +46,7 @@ impl Into<i64> for &Value {
 	}
 }
 
+//Easy convert to/from string (for Text)
 impl From<String> for Value {
 	fn from(input: String) -> Self {
 		return Value::Text(input);
@@ -67,6 +69,7 @@ impl From<&str> for Value {
 	}
 }
 
+//Easy convert to/from bool
 impl From<bool> for Value {
 	fn from(input: bool) -> Self {
 		return Value::Bool(input);
@@ -84,12 +87,14 @@ impl Into<bool> for &Value {
 	}
 }
 
+//Easy convert from hashmap(object)
 impl From<HashMap<String, Value>> for Value {
 	fn from(input: HashMap<String, Value>) -> Self {
 		return Value::Object(input);
 	}
 }
 
+//Easy convert from Vec(array)
 impl From<Vec<Value>> for Value {
 	fn from(input: Vec<Value>) -> Self {
 		return Value::Array(input);
@@ -97,25 +102,30 @@ impl From<Vec<Value>> for Value {
 }
 
 impl Value {
+	//Create new empty object
 	pub fn obj() -> Value {
 		return Value::Object(HashMap::new());
 	}
+	//Create new object from string
 	pub fn from_str(_input: &str) -> Value {
 		return Value::Null;
 	}
 
+	//Create new empty array
 	pub fn arr() -> Value {
 		return Value::Array(Vec::new());
 	}
 
+	//Get number of items held within array or object
 	pub fn len(&self) -> usize {
 		match self {
     		Value::Array(x) => x.len(),
 			Value::Object(x) => x.len(),
-    		_ => 0
+    		_ => 1
 		}
 	}
 
+	//Check if an object has a key
 	pub fn has(&self, key: &str) -> bool {
 		match self {
 			Value::Object(x) => x.contains_key(key),
@@ -123,6 +133,7 @@ impl Value {
 		}
 	}
 
+	//Append a new value to an array
 	pub fn append(&mut self, val: Value) {
 		match self {
 			Value::Array(x) => x.push(val),
@@ -130,6 +141,7 @@ impl Value {
 		}
 	}
 
+	//Convert to text
 	pub fn to_string(&self) -> String {
 		let mut to_return = String::from("");
 
@@ -194,6 +206,7 @@ impl Value {
 
 }
 
+//Index function for Array z = arr[x];
 impl Index<usize> for Value {
 	type Output = Value;
 
@@ -209,6 +222,7 @@ impl Index<usize> for Value {
 	}
 }
 
+//Mutable index function for array arr[x] = z;
 impl IndexMut<usize> for Value {
 	fn index_mut(&mut self, index: usize) -> &mut Self::Output {
 		if let Value::Array(x) = self {
@@ -228,6 +242,7 @@ impl IndexMut<usize> for Value {
 	}
 }
 
+//Index function for object z = obj["x"];
 impl Index<&str> for Value {
 	type Output = Value;
 
@@ -243,6 +258,7 @@ impl Index<&str> for Value {
 	}
 }
 
+//Mutable index function for object obj["x"] = z;
 impl IndexMut<&str> for Value {
 	fn index_mut(&mut self, index: &str) -> &mut Self::Output {
 		if let Value::Object(x) = self {
