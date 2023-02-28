@@ -267,7 +267,7 @@ impl IndexMut<&str> for Value {
 			}
 
 			//We need to return a mutable reference still
-			x.insert(index.to_string(), Value::Null);
+			x.insert(index.to_string(), Value::obj());
 			return x.get_mut(index).unwrap();
 		}
 
