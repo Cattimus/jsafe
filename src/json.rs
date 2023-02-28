@@ -144,7 +144,8 @@ impl Value {
 		}
 	}
 
-	pub fn alloc(&mut self, amount: usize) {
+	//Preallocate space for a structure (to make additions faster)
+	pub fn pre_alloc(&mut self, amount: usize) {
 		match self {
 			Value::Object(x) => x.reserve(amount),
 			Value::Array(x) => x.reserve(amount),
