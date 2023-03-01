@@ -93,6 +93,24 @@ pub unsafe extern "C" fn jsafe_get_property(this: *mut Value, key: *const c_char
 	this.as_mut().unwrap()[str].as_mut()
 }
 
+//Set a value from string index. This will free the value passed to it
+#[no_mangle]
+pub unsafe extern "C" fn jsafe_set_property(this: *mut Value, key: *const c_char, val: Option<Box<Value>>) -> *mut Value {
+	if this.is_null() || key.is_null() {
+		return null_mut();
+	}
+
+	//accounting for NULL
+	let str = CStr::from_ptr(key).to_str().unwrap();
+	if val.is_none() {
+		this.as_mut().unwrap()[str] = Value::Null;
+	} else {
+		this.as_mut().unwrap()[str] = *val.unwrap();
+	}
+	
+	this.as_mut().unwrap()[str].as_mut()
+}
+
 //Get a pointer to a value from a number index
 #[no_mangle]
 pub unsafe extern "C" fn jsafe_get_index(this: *mut Value, key: usize) -> *mut Value {
