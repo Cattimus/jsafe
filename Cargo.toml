@@ -3,6 +3,6 @@ name = "jsafe"
 version = "0.1.0"
 
 [lib]
-crate_type = ["lib"]
+crate_type = ["lib","cdylib","staticlib"]
 
 [dependencies]
