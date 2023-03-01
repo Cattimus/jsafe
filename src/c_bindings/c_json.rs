@@ -59,9 +59,9 @@ pub extern "C" fn jsafe_new_num(val: c_double) -> Box<Value> {
 
 //Add a new value to an array. This will take ownership of the pointer.
 #[no_mangle]
-pub unsafe extern "C" fn jsafe_add(this: *mut Value, to_add: Option<Box<Value>>) {
+pub unsafe extern "C" fn jsafe_add(this: *mut Value, to_add: Option<Box<Value>>) -> *mut Value {
 	if this.is_null() {
-		return;
+		return null_mut();
 	}
 
 	//shorthand to add a null
@@ -69,7 +69,13 @@ pub unsafe extern "C" fn jsafe_add(this: *mut Value, to_add: Option<Box<Value>>)
 		this.as_mut().unwrap().add(Value::Null);
 	}
 
-	this.as_mut().unwrap().add(*to_add.unwrap());
+	//add item to list
+	let val = this.as_mut().unwrap();
+	val.add(*to_add.unwrap());
+
+	//get item from list
+	let len = val.len() -1;
+	val[len].as_mut()
 }
 
 //Pre-allocate slots for the container (to speed up adding values)
@@ -108,6 +114,7 @@ pub unsafe extern "C" fn jsafe_set_property(this: *mut Value, key: *const c_char
 		this.as_mut().unwrap()[str] = *val.unwrap();
 	}
 	
+	//return reference to our value
 	this.as_mut().unwrap()[str].as_mut()
 }
 
