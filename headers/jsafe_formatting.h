@@ -3,6 +3,6 @@
 
 #include "jsafe_types.h"
 
-extern "C" const char* jsafe_to_pretty(jsafe_value* to_print, int spaces);
+extern "C" const char** jsafe_to_pretty(jsafe_value* to_print, int spaces);
 
 #endif

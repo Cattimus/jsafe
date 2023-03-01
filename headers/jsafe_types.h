@@ -2,5 +2,6 @@
 #define JSAFE_TYPES_H
 
 typedef void jsafe_value;
+typedef const char* jsafe_string;
 
 #endif

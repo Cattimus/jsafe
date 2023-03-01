@@ -1,6 +1,6 @@
 use json::Value;
 use std::ffi::{CStr, CString, c_char, c_int, c_double, c_uint};
-use std::ptr::null_mut;
+use std::ptr::{null_mut};
 
 //Free a value
 #[no_mangle]
@@ -136,7 +136,7 @@ pub unsafe extern "C" fn jsafe_get_index(this: *mut Value, key: usize) -> *mut V
 #[no_mangle]
 pub unsafe extern "C" fn jsafe_to_string(this: *mut Value) -> Box<CString> {
 	if this.is_null() {
-		return Box::new(CString::new("").unwrap());
+		return Box::new(CString::new("Null").unwrap());
 	}
 
 	let str = this.as_ref().unwrap().to_string();

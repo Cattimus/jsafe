@@ -5,7 +5,7 @@
 
 //Deallocation functions
 extern "C" void jsafe_free_value(jsafe_value* val);
-extern "C" void jsafe_free_string(const char* str);
+extern "C" void jsafe_free_string(jsafe_string* str);
 
 //Allocation functions
 extern "C" jsafe_value* jsafe_new_obj();
@@ -23,10 +23,10 @@ extern "C" void jsafe_prealloc(jsafe_value* root, unsigned int size);
 
 //Get properties
 extern "C" unsigned int jsafe_get_len(jsafe_value* val);
-extern "C" const char* jsafe_get_text(jsafe_value* val);
+extern "C" jsafe_string* jsafe_get_text(jsafe_value* val);
 extern "C" double jsafe_get_num(jsafe_value* val);
 extern "C" int jsafe_get_bool(jsafe_value* val);
-extern "C" const char* jsafe_to_string(jsafe_value* val);
+extern "C" jsafe_string* jsafe_to_string(jsafe_value* val);
 
 //Check properties
 extern "C" int jsafe_has_key(jsafe_value* val, const char* key);
