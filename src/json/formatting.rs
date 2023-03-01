@@ -15,7 +15,7 @@ fn indent(input: &mut String, indent_level: usize, spaces: bool) {
 
 //Format a json object from condensed text to human-readable format.
 #[allow(unused)]
-pub fn format(to_print: Value, spaces: usize) -> String {
+pub fn format(to_print: &Value, spaces: usize) -> String {
 	let mut to_return = String::from("");
 
 	//Check if the object we are trying to format is an object or array
