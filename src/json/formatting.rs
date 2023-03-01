@@ -1,5 +1,4 @@
 use crate::json::Value;
-#[allow(unused)]
 
 //Helper function to make indenting easier
 #[allow(unused)]
