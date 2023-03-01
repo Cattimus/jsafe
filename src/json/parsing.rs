@@ -44,7 +44,7 @@ fn remove_whitespace(input: &str) -> String {
 
 //Convert a string to a json::Value object
 #[allow(unused)]
-pub fn parse_value(value: &str) -> Value {
+pub fn from_str(value: &str) -> Value {
 
 	//Check what the first character of the string is to see what the value should be
 	let first = value.chars().nth(0).unwrap();
@@ -84,7 +84,7 @@ pub fn parse_value(value: &str) -> Value {
 
 		//Number
 		c if c.is_numeric() => {
-			Value::Number(value.parse().unwrap())
+			Value::Number(value.parse::<f64>().unwrap())
 		}
 
 		//Miscellaneous invalid text
@@ -108,7 +108,7 @@ fn parse_keypair(keypair: &str) -> (&str, Value) {
 	let key = &key[1..key.len()-1];
 
 	//parse value
-	(key, parse_value(value))
+	(key, from_str(value))
 }
 
 //Get a list of where we should split a string
@@ -194,7 +194,7 @@ fn get_splits(input: &str) -> Option<Vec<usize>> {
 
 //Parse a JSON object from a string
 #[allow(unused)]
-pub fn parse_object(input: &str) -> Value {
+fn parse_object(input: &str) -> Value {
 	let mut to_return = Value::obj();
 
 	//We know if the first character isn't an opening bracket, our json object is invalid
@@ -251,7 +251,7 @@ pub fn parse_object(input: &str) -> Value {
 
 //Parse a string into an array
 #[allow(unused)]
-pub fn parse_array(input: &str) -> Value{
+fn parse_array(input: &str) -> Value{
 	let mut to_return = Value::arr();
 	
 	//We know if the first character of our array isn't [, it is invalid.
@@ -290,7 +290,7 @@ pub fn parse_array(input: &str) -> Value{
 	//Parse values
 	for value in values {
 		let text = remove_whitespace(value);
-		let val = parse_value(text.as_str());
+		let val = from_str(text.as_str());
 
 		if let Value::Invalid = val {
 			return Value::Invalid;

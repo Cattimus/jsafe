@@ -9,5 +9,5 @@ pub unsafe extern "C" fn jsafe_to_pretty(to_print: *mut Value, spaces: usize) ->
 		return Box::new(CString::new("").unwrap());
 	}
 
-	return Box::new(CString::new(formatting::format(to_print.as_ref().unwrap(), spaces).as_bytes()).unwrap());
+	return Box::new(CString::new(formatting::prettify(to_print.as_ref().unwrap(), spaces).as_bytes()).unwrap());
 }

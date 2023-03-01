@@ -2,12 +2,8 @@ mod json;
 use json::Value;
 
 fn main() {
-	let mut root = Value::obj();
-	root.pre_alloc(1000000);
-	
-	for i in 0..1000000 {
-		root[i.to_string().as_str()] = i.into();
-	}
+	let data = std::fs::read_to_string("test.json").expect("Cannot read input file.");
 
-	//println!("{}", formatting::format(root, 2));
+	let root = json::parsing::from_str(data.as_str());
+	println!("{}", json::formatting::prettify(&root, 2));
 }

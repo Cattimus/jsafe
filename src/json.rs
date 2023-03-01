@@ -109,10 +109,6 @@ impl Value {
 	pub fn obj() -> Value {
 		return Value::Object(HashMap::new());
 	}
-	//Create new object from string
-	pub fn from_str(input: &str) -> Value {
-		return parsing::parse_object(input);
-	}
 
 	//Create new empty array
 	pub fn arr() -> Value {

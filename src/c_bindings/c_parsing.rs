@@ -12,5 +12,5 @@ pub unsafe extern "C" fn jsafe_from_str(text: *const c_char) -> Box<Value>{
 	}
 
 	let str = str.unwrap();
-	Box::new(parsing::parse_value(str))
+	Box::new(parsing::from_str(str))
 }
