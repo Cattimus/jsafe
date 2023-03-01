@@ -3,6 +3,6 @@
 
 #include "jsafe_types.h"
 
-extern jsafe_value* jsafe_from_str(const char* text);
+extern "C" jsafe_value* jsafe_from_str(const char* text);
 
 #endif
