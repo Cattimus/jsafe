@@ -1,7 +1,6 @@
 mod json;
 use json::Value;
 
-
 fn main() {
 	let mut root = Value::obj();
 	root.pre_alloc(1000000);
