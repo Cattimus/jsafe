@@ -18,8 +18,9 @@ extern "C" jsafe_value* jsafe_new_bool(int val);
 extern "C" jsafe_value* jsafe_new_num(double val);
 
 //Set properties
+extern "C" void jsafe_reset(jsafe_object* root);
 extern "C" void jsafe_o_get(jsafe_object* root, const char* key); //Get for object
-extern "C" void jsafe_o_set(jsafe_object* root, const char* key, jsafe_value* val); //set for object
+extern "C" void jsafe_o_add(jsafe_object* root, const char* key, jsafe_value* val); //set for object
 extern "C" void jsafe_a_add(jsafe_object* root, jsafe_value* to_add); //Append to array
 extern "C" void jsafe_a_get(jsafe_object* root, unsigned int size);
 extern "C" void jsafe_prealloc(jsafe_object* root, unsigned int size);

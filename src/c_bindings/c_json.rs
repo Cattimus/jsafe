@@ -4,20 +4,21 @@ use std::ptr::{null_mut};
 use std::sync::Mutex;
 
 //keep track of objects allocated from our library
-static OBJECTS: Mutex<Vec<Box<object>>> = Mutex::new(Vec::new());
-static STRINGS: Mutex<Vec<Box<CString>>> = Mutex::new(Vec::new());
+pub static OBJECTS: Mutex<Vec<Box<object>>> = Mutex::new(Vec::new());
+pub static STRINGS: Mutex<Vec<Box<CString>>> = Mutex::new(Vec::new());
 
 //We do not want objects to spawn pointers that will become invalid when the object is deleted
+#[allow(non_camel_case_types)]
 pub struct object {
-	root: Value,
-	current: *mut Value
+	pub root: Value,
+	pub current: *mut Value
 }
 
 //tell rust that we are only referencing values in our struct
 unsafe impl Send for object {}
 
 //Helper function to add a new object to the global pool
-fn create_object(to_add: Value) -> *mut object {
+pub fn create_object(to_add: Value) -> *mut object {
 	let mut val = Box::new(object {
 		root: to_add,
 		current: null_mut()
@@ -37,7 +38,7 @@ fn create_object(to_add: Value) -> *mut object {
 }
 
 //Helper function to initialize a new string to the global pool
-fn create_string(to_add: CString) -> *mut CString {
+pub fn create_string(to_add: CString) -> *mut CString {
 	let mut val = Box::new(to_add);
 
 	let to_return: *mut CString = val.as_mut();
@@ -48,7 +49,7 @@ fn create_string(to_add: CString) -> *mut CString {
 }
 
 //Helper function to check if an object is null
-unsafe fn object_is_null(this: *mut object) -> bool{
+pub unsafe fn object_is_null(this: *mut object) -> bool{
 	this.is_null() || (*this).current.is_null()
 }
 
@@ -104,6 +105,17 @@ pub extern "C" fn jsafe_cleanup() {
 #[no_mangle]
 pub extern "C" fn jsafe_new_root() -> *mut object {
 	create_object(Value::obj())
+}
+
+//Reset an object's pointer to root
+#[no_mangle]
+pub unsafe extern "C" fn jsafe_reset(this: *mut object) {
+	if object_is_null(this) {
+		return;
+	}
+
+	//reset pointer to root
+	(*this).current = (*this).root.as_mut();
 }
 
 //Return a reference to a new json object

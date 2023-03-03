@@ -1,13 +1,14 @@
-use json::Value;
 use json::formatting;
 
 use std::ffi::{CString};
 
+use super::c_json::{object,create_string,object_is_null};
+
 #[no_mangle]
-pub unsafe extern "C" fn jsafe_to_pretty(to_print: *mut Value, spaces: usize) -> Box<CString> {
-	if to_print.is_null() {
-		return Box::new(CString::new("").unwrap());
+pub unsafe extern "C" fn jsafe_to_pretty(this: *mut object, spaces: usize) -> *mut CString {
+	if object_is_null(this) {
+		return create_string(CString::new("").unwrap());
 	}
 
-	return Box::new(CString::new(formatting::prettify(to_print.as_ref().unwrap(), spaces).as_bytes()).unwrap());
+	return create_string(CString::new(formatting::prettify((*(*this).current).as_ref(), spaces).as_bytes()).unwrap());
 }
