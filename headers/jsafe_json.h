@@ -6,6 +6,7 @@
 //Deallocation functions
 extern "C" void jsafe_free_value(jsafe_value* val);
 extern "C" void jsafe_free_string(jsafe_string* str);
+extern "C" void jsafe_cleanup();
 
 //Allocation functions
 extern "C" jsafe_value* jsafe_new_obj();
