@@ -149,22 +149,6 @@ pub extern "C" fn jsafe_new_num(val: c_double) -> Box<Value> {
 	Box::new(Value::Number(val))
 }
 
-//Add a new value to an array. This will take ownership of the pointer.
-#[no_mangle]
-pub unsafe extern "C" fn jsafe_add(this: *mut object, to_add: Option<Box<Value>>) {
-	if object_is_null(this) {
-		return;
-	}
-
-	//shorthand to add a null if you run jsafe_add(val, NULL)
-	if to_add.is_none() {
-		(*(*this).current).add(Value::Null);
-	}
-
-	//add item to list
-	(*(*this).current).add(*to_add.unwrap());
-}
-
 //Pre-allocate slots for the container (to speed up adding values)
 #[no_mangle]
 pub unsafe extern "C" fn jsafe_prealloc(this: *mut object, amount: usize) {
@@ -177,7 +161,7 @@ pub unsafe extern "C" fn jsafe_prealloc(this: *mut object, amount: usize) {
 
 //Get a pointer to a Value from a string index
 #[no_mangle]
-pub unsafe extern "C" fn jsafe_get_property(this: *mut object, key: *const c_char) {
+pub unsafe extern "C" fn jsafe_o_get(this: *mut object, key: *const c_char) {
 	if  object_is_null(this) {
 		return;
 	}
@@ -190,7 +174,7 @@ pub unsafe extern "C" fn jsafe_get_property(this: *mut object, key: *const c_cha
 
 //Set a value from string index. This will free the value passed to it
 #[no_mangle]
-pub unsafe extern "C" fn jsafe_set_property(this: *mut object, key: *const c_char, val: Option<Box<Value>>) {
+pub unsafe extern "C" fn jsafe_o_add(this: *mut object, key: *const c_char, val: Option<Box<Value>>) {
 	if object_is_null(this) {
 		return;
 	}
@@ -206,7 +190,7 @@ pub unsafe extern "C" fn jsafe_set_property(this: *mut object, key: *const c_cha
 
 //Get a pointer to a value from a number index
 #[no_mangle]
-pub unsafe extern "C" fn jsafe_get_index(this: *mut object, key: usize) {
+pub unsafe extern "C" fn jsafe_a_get(this: *mut object, key: usize) {
 	if object_is_null(this) {
 		return;
 	}
@@ -216,6 +200,22 @@ pub unsafe extern "C" fn jsafe_get_index(this: *mut object, key: usize) {
 	}
 
 	(*this).current = (*(*this).current)[key].as_mut();
+}
+
+//Add a new value to an array. This will take ownership of the pointer.
+#[no_mangle]
+pub unsafe extern "C" fn jsafe_a_add(this: *mut object, to_add: Option<Box<Value>>) {
+	if object_is_null(this) {
+		return;
+	}
+
+	//shorthand to add a null if you run jsafe_add(val, NULL)
+	if to_add.is_none() {
+		(*(*this).current).add(Value::Null);
+	}
+
+	//add item to list
+	(*(*this).current).add(*to_add.unwrap());
 }
 
 //Return a string representation of an object
